@@ -14,6 +14,7 @@ jobs:
       - name: Lint
         run: npm run lint 
   CodeTest:
+    needs: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -23,6 +24,7 @@ jobs:
       - name: Test Code
         run: npm run test
   BuildCode:
+    needs: CodeTest
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -31,7 +33,8 @@ jobs:
         run: npm ci
       - name: Build Code
         run: npm run build
-  deploy:
+  deploy: 
+    needs: BuildCode
     runs-on: ubuntu-latest
     steps:
     - name: Get Code
